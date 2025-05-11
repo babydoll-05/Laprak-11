@@ -1,14 +1,19 @@
-def ubah_nama_file(file):
-    with open(file, 'r') as f:
-        kata = f.readlines()
-        print(kata)
+def ambil_kata_unik(nama_file):
+    try:
+        with open(nama_file, 'r', encoding='utf-8') as file:
+            isi = file.read()
+        for tanda in ['.', ',', '!', '?', ':', ';', '(', ')', '"', "'"]:
+            isi = isi.replace(tanda, '')
+        kata_list = isi.lower().split()
+        kata_unik = set(kata_list)
+        print("Kata-kata unik dalam file:")
+        for kata in sorted(kata_unik):
+            print(kata)
 
-        print('===================ISI BERITA================')
-        print(kata)
-        print('===============Kata Unik pada berita=========')
-        for line in kata:
-            list = line.strip().split()
-            print(list)
+    except FileNotFoundError:
+        print("File tidak ditemukan.")
+    except Exception as e:
+        print("Terjadi kesalahan:", e)
 
-namafile = "laprak\news.txt"
-ubah_nama_file(namafile)
+nama_file = input("Masukkan nama file teks : ")
+ambil_kata_unik(nama_file)
